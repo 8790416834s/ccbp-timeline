@@ -11,13 +11,9 @@ const CourseTimelineCard = props => {
     tagsList,
   } = courseDetails
   console.log(tagsList)
-  return (
-    <div>
-      <div>
-        <h1>{courseTitle}</h1>
-        <p>{duration}</p>
-      </div>
-      <p>{description}</p>
+
+  const renderTagsList = () => (
+    <>
       <ul>
         {tagsList.map(each => (
           <li key={each.id}>
@@ -25,6 +21,16 @@ const CourseTimelineCard = props => {
           </li>
         ))}
       </ul>
+    </>
+  )
+
+  return (
+    <div>
+      <div>
+        <h1>{courseTitle}</h1>
+        <p>{duration}</p>
+      </div>
+      <p>{description}</p>
     </div>
   )
 }

@@ -6,20 +6,58 @@ import CourseTimelineCard from '../CourseTimelineCard'
 import './index.css'
 
 class TimelineView extends Component {
+  getProjectFilter = () => {
+    const {timelineItemsList} = this.props
+    const projectFilter = timelineItemsList.map(each =>
+      each.categoryId === 'PROJECT' ? each : 'empty',
+    )
+    return projectFilter
+  }
+
+  getCourseFilter = () => {
+    const {timelineItemsList} = this.props
+    const courseFilter = timelineItemsList.map(each =>
+      each.categoryId === 'COURSE' ? each : 'empty',
+    )
+    return courseFilter
+  }
+
   visitBtn = projectUrl => {
     console.log(`id ${projectUrl}`)
   }
 
-  render() {
-    const {timelineItemsList} = this.props
-    const projectFilter = timelineItemsList.map(each =>
-      each.categoryId === 'PROJECT' ? each : '',
+  renderCourse = () => {
+    const courseFilter = this.getCourseFilter()
+    return (
+      <>
+        <ul>
+          {courseFilter.map(each => (
+            <CourseTimelineCard courseDetails={each} key={each.id} />
+          ))}
+        </ul>
+      </>
     )
+  }
 
-    const courseFilter = timelineItemsList.map(each =>
-      each.categoryId === 'COURSE' ? each : '',
+  renderProject = () => {
+    const projectFilter = this.getProjectFilter()
+    return (
+      <>
+        <ul>
+          {projectFilter.map(each => (
+            <ProjectTimelineCard
+              projectDetails={each}
+              key={each.id}
+              visitBtn={this.visitBtn}
+            />
+          ))}
+        </ul>
+      </>
     )
-    console.log(courseFilter)
+  }
+
+  render() {
+    const courseFilter = this.getCourseFilter()
     return (
       <div className="main-container">
         <h1>MY JOURNEY OF</h1>
@@ -27,29 +65,17 @@ class TimelineView extends Component {
         <div className="chrono-container">
           <Chrono
             mode="VERTICAL"
-            items={projectFilter}
+            items={courseFilter}
             theme={{
               primary: 'red',
               secondary: 'blue',
-              cardBgColor: 'white',
+              cardBgColor: 'yellow',
               cardForeColor: 'violet',
               titleColor: 'black',
             }}
           />
-          <ul>
-            {projectFilter.map(each => (
-              <ProjectTimelineCard
-                projectDetails={each}
-                key={each.categoryId}
-                visitBtn={this.visitBtn}
-              />
-            ))}
-          </ul>
-          <ul>
-            {courseFilter.map(each => (
-              <CourseTimelineCard courseDetails={each} key={each.categoryId} />
-            ))}
-          </ul>
+          {this.renderProject()}
+          {this.renderCourse()}
         </div>
       </div>
     )
