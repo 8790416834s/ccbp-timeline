@@ -8,16 +8,16 @@ import './index.css'
 class TimelineView extends Component {
   getProjectFilter = () => {
     const {timelineItemsList} = this.props
-    const projectFilter = timelineItemsList.map(each =>
-      each.categoryId === 'PROJECT' ? each : 'empty',
+    const projectFilter = timelineItemsList.filter(each =>
+      each.categoryId === 'PROJECT' ? each : '',
     )
     return projectFilter
   }
 
   getCourseFilter = () => {
     const {timelineItemsList} = this.props
-    const courseFilter = timelineItemsList.map(each =>
-      each.categoryId === 'COURSE' ? each : 'empty',
+    const courseFilter = timelineItemsList.filter(each =>
+      each.categoryId === 'COURSE' ? each : '',
     )
     return courseFilter
   }
@@ -26,56 +26,44 @@ class TimelineView extends Component {
     console.log(`id ${projectUrl}`)
   }
 
-  renderCourse = () => {
-    const courseFilter = this.getCourseFilter()
-    return (
-      <>
-        <ul>
-          {courseFilter.map(each => (
-            <CourseTimelineCard courseDetails={each} key={each.id} />
-          ))}
-        </ul>
-      </>
-    )
-  }
+  courseData = data => ({
+    title: data.title,
+    cardTitle: data.courseTitle,
+    cardSubtitle: data.duration,
+    cardDetailedText: data.description,
+  })
 
-  renderProject = () => {
-    const projectFilter = this.getProjectFilter()
-    return (
-      <>
-        <ul>
-          {projectFilter.map(each => (
-            <ProjectTimelineCard
-              projectDetails={each}
-              key={each.id}
-              visitBtn={this.visitBtn}
-            />
-          ))}
-        </ul>
-      </>
-    )
-  }
+  projectData = data => ({
+    title: data.title,
+    cardTitle: data.projectTitle,
+    cardSubtitle: data.duration,
+    cardDetailedText: data.description,
+    media: data.imageUrl,
+    url: data.projectUrl,
+  })
 
   render() {
     const courseFilter = this.getCourseFilter()
+    const projectFilter = this.getProjectFilter()
+    console.log(projectFilter)
+    const course = courseFilter.map(each => this.courseData(each))
+    const project = projectFilter.map(each => this.projectData(each))
     return (
       <div className="main-container">
         <h1>MY JOURNEY OF</h1>
         <p>CCBP 4.0</p>
         <div className="chrono-container">
           <Chrono
-            mode="VERTICAL"
-            items={courseFilter}
+            mode="VERTICAL_ALTERNATING"
+            items={project}
             theme={{
               primary: 'red',
               secondary: 'blue',
-              cardBgColor: 'yellow',
+              cardBgColor: 'white',
               cardForeColor: 'violet',
               titleColor: 'black',
             }}
           />
-          {this.renderProject()}
-          {this.renderCourse()}
         </div>
       </div>
     )
