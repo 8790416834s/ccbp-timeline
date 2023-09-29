@@ -13,17 +13,16 @@ class TimelineView extends Component {
         <h1>MY JOURNEY OF</h1>
         <p>CCBP 4.0</p>
         <div className="chrono-container">
-          <Chrono
-            mode="VERTICAL_ALTERNATING"
-            items={timelineItemsList}
-            theme={{
-              primary: 'red',
-              secondary: 'blue',
-              cardBgColor: 'white',
-              cardForeColor: 'violet',
-              titleColor: 'black',
-            }}
-          />
+          <Chrono mode="VERTICAL_ALTERNATING" items={timelineItemsList}>
+            {timelineItemsList.map(each => {
+              if (each.catergoryId === 'PROJECT') {
+                return (
+                  <ProjectTimelineCard key={each.id} projectDetails={each} />
+                )
+              }
+              return <CourseTimelineCard key={each.id} courseDetails={each} />
+            })}
+          </Chrono>
         </div>
       </div>
     )

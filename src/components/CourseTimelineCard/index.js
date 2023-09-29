@@ -10,7 +10,6 @@ const CourseTimelineCard = props => {
     duration,
     tagsList,
   } = courseDetails
-  console.log(tagsList)
 
   const renderTagsList = () => (
     <>
@@ -31,6 +30,7 @@ const CourseTimelineCard = props => {
         <p>{duration}</p>
       </div>
       <p>{description}</p>
+      {renderTagsList()}
     </div>
   )
 }
