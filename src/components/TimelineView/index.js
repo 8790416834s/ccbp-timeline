@@ -6,6 +6,10 @@ import CourseTimelineCard from '../CourseTimelineCard'
 import './index.css'
 
 class TimelineView extends Component {
+  visitBtn = projectUrl => {
+    console.log(projectUrl)
+  }
+
   render() {
     const {timelineItemsList} = this.props
     return (
@@ -15,9 +19,13 @@ class TimelineView extends Component {
         <div className="chrono-container">
           <Chrono mode="VERTICAL_ALTERNATING" items={timelineItemsList}>
             {timelineItemsList.map(each => {
-              if (each.catergoryId === 'PROJECT') {
+              if (each.categoryId === 'PROJECT') {
                 return (
-                  <ProjectTimelineCard key={each.id} projectDetails={each} />
+                  <ProjectTimelineCard
+                    key={each.id}
+                    projectDetails={each}
+                    visitBtn={this.visitBtn}
+                  />
                 )
               }
               return <CourseTimelineCard key={each.id} courseDetails={each} />

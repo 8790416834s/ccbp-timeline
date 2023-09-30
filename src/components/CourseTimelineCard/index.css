@@ -1,1 +1,11 @@
-/* Write your CSS here */
+.title-container {
+  display: flex;
+  justify-content: space-between;
+}
+.duration-container {
+  display: flex;
+}
+.clock {
+  margin-top: 20px;
+  margin-right: 5px;
+}
