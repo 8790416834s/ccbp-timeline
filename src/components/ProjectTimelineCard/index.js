@@ -24,6 +24,7 @@ const ProjectTimelineCard = props => {
       <div className="title-container">
         <h1>{projectTitle}</h1>
         <div className="duration-container">
+          <AiFillCalender />
           <p>{duration}</p>
         </div>
       </div>
